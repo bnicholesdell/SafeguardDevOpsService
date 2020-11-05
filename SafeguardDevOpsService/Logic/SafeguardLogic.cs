@@ -476,7 +476,7 @@ namespace OneIdentity.DevOps.Logic
 
         private string LocalIPAddress()
         {
-            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable() || WellKnownData.IsLinux)
             {
                 return null;
             }

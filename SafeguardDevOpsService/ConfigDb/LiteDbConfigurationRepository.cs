@@ -49,11 +49,8 @@ namespace OneIdentity.DevOps.ConfigDb
         private const string WebSslCsrDataKey = "WebSslCertificateSigningRequestData";
         private const string WebSslCsrPrivateKeyDataKey = "WebSslCertificateSigningRequestPrivateKeyData";
 
-        private readonly bool _isLinux;
-
         public LiteDbConfigurationRepository()
         {
-            _isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             InitializeDatabase();
         }
 
@@ -65,7 +62,7 @@ namespace OneIdentity.DevOps.ConfigDb
             Serilog.Log.Logger.Information($"Loading configuration database at {dbPath}.");
 
             var passwd = GetPassword();
-            if (string.IsNullOrEmpty(passwd) && !_isLinux)
+            if (string.IsNullOrEmpty(passwd) && !WellKnownData.IsLinux)
             {
                 passwd = SavePassword(GeneratePassword());
             }
@@ -118,7 +115,7 @@ namespace OneIdentity.DevOps.ConfigDb
 
         private string GetPassword()
         {
-            if (_isLinux)
+            if (WellKnownData.IsLinux)
             {
                 return Environment.GetEnvironmentVariable(WellKnownData.CredentialEnvVar);
             }
@@ -133,7 +130,7 @@ namespace OneIdentity.DevOps.ConfigDb
 
         private void DeletePassword()
         {
-            if (_isLinux)
+            if (WellKnownData.IsLinux)
             {
                 return;
             }

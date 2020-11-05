@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Http;
 using OneIdentity.DevOps.Common;
 
@@ -42,6 +43,7 @@ namespace OneIdentity.DevOps.Logic
         public static readonly string PluginDirPath = Path.Combine(ProgramDataPath, PluginDirName);
         public static readonly string PluginStageDirPath = Path.Combine(ProgramDataPath, PluginStageName);
         public static readonly string SvcIdPath = Path.Combine(WellKnownData.ServiceDirPath, WellKnownData.ServiceIdentifier);
+        public static readonly bool IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
 
         public static string GetSppToken(HttpContext context)
