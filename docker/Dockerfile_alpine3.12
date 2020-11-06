@@ -20,6 +20,8 @@ COPY ["docker/run-devops.sh", "/home/safeguard/run-devops.sh"]
 
 RUN chown -R safeguard:safeguard /home/safeguard \
     && chown -R safeguard:safeguard /usr/share
+	
+RUN export HOST_ADDRESSES=$(ip -o -4 addr | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p') && echo -e "$HOST_ADDRESSES"	
 
 USER safeguard
 WORKDIR /home/safeguard

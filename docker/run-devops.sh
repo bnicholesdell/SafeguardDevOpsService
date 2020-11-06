@@ -16,6 +16,9 @@ cleanup()
 }
 trap cleanup EXIT
 
+export HOST_ADDRESSES=$(ip -o -4 addr | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+echo -e "$HOST_ADDRESSES"
+
 echo -e "${YELLOW}Starting SafeguardDevOpsService${NC}"
 bash -c 'while true; do echo -e "SafeguardDevOpsService is not running, executing..."; /home/safeguard/SafeguardDevOpsService; sleep 1; done' &
 
